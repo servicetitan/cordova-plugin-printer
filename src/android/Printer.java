@@ -339,7 +339,6 @@ public class Printer extends CordovaPlugin {
     protected void pluginInitialize() {
         super.pluginInitialize();
         pm = new PrintManager(cordova.getActivity());
-        pm.setOnPrintJobStateChangeListener(listener);
     }
 
     /**
@@ -348,8 +347,6 @@ public class Printer extends CordovaPlugin {
     @Override
     public void onDestroy() {
  	if(pm != null && listener != null && command != null && view != null) {
-       	   pm.unsetOnPrintJobStateChangeListener();
-
        	   pm       = null;
            listener = null;
            command  = null;
