@@ -62,11 +62,39 @@ public abstract class Meta  {
      *      The found method or null.
      */
     public static Method getMethod (Class<?> cls, String name, Class<?>... params) {
+        return getMethod(cls, name, false, params);
+    }
+
+    /**
+     * Finds the method with given name and set of arguments.
+     *
+     * @param cls
+     *      The class in where to look for the method declaration.
+     * @param name
+     *      The name of the method.
+     * @param includeInherited
+     *      Where or not to include searching public inherited methods
+     * @param params
+     *      The arguments of the method.
+     * @return
+     *      The found method or null.
+     */
+    public static Method getMethod (Class<?> cls, String name, boolean includeInherited, Class<?>... params) {
         try {
             return cls.getDeclaredMethod(name, params);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            return null;
+            if (includeInherited) {
+                try {
+                    return cls.getMethod(name, params);
+                } catch (NoSuchMethodException baseError) {
+                    baseError.printStackTrace();
+                    return null;
+                }
+            }
+            else {
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 

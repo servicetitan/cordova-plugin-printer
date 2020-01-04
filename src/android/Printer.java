@@ -231,7 +231,7 @@ public class Printer extends CordovaPlugin {
 
         if (Build.VERSION.SDK_INT >= 21) {
             Method setMixedContentModeMethod = Meta.getMethod(
-                    settings.getClass(), "setMixedContentMode", int.class);
+                    settings.getClass(), "setMixedContentMode", true, int.class);
 
             Meta.invokeMethod(settings, setMixedContentModeMethod, 2);
         }
